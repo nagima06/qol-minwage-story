@@ -1,0 +1,42 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Downloading…</title>
+<style>
+  body{font:16px/1.6 system-ui,Segoe UI,Roboto,Arial;margin:40px;color:#111}
+  .box{max-width:720px;margin:auto}
+  .muted{color:#666}
+</style>
+<div class="box">
+  <h1>Preparing your download…</h1>
+  <p class="muted">If the download doesn’t start automatically, a direct link will appear.</p>
+  <p id="status" class="muted"></p>
+  <p><a id="fallback" href="#" download style="display:none">Click here if nothing happens</a></p>
+</div>
+<script>
+(async ()=>{
+  const params = new URLSearchParams(location.search);
+  const filename = params.get('f');
+  if(!filename){ document.getElementById('status').textContent = 'No file specified (?f=...)'; return; }
+
+  try{
+    document.getElementById('status').textContent = 'Fetching ' + filename + ' …';
+    const res = await fetch(filename, {cache:'no-store'});
+    if(!res.ok) throw new Error('Fetch failed: ' + res.status);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename.split('/').pop();
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+
+    document.getElementById('status').textContent = 'Download started.';
+    const fb = document.getElementById('fallback');
+    fb.href = url; fb.download = a.download; fb.style.display='inline';
+  }catch(err){
+    document.getElementById('status').textContent = 'Error: ' + err.message;
+  }
+})();
+</script>
