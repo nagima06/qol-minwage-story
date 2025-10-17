@@ -28,9 +28,17 @@
     .btn{display:inline-flex;align-items:center;gap:8px;background:#0f1836;border:1px solid #2a376b;color:#dfe8ff;border-radius:10px;padding:10px 14px;text-decoration:none}
     .btn:hover{border-color:#6ea8fe}
     .row{display:flex;gap:8px;flex-wrap:wrap}
+    .calc{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
+    input{background:#0d1530;border:1px solid #2a376b;color:var(--ink);border-radius:10px;padding:8px}
+    label{font-size:12px;color:#cbd6ff}
     footer{color:var(--muted);text-align:center;margin:28px 0 40px}
     .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto}
   </style>
+  <!-- (선택) 공유 미리보기 카드 -->
+  <meta property="og:title" content="Minimum Wage × QoL — Korea 2008–2023">
+  <meta property="og:description" content="Pooled OLS, pre–post CI, and embedded interactive reports (Option 2/3).">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
   <header>
@@ -39,6 +47,8 @@
         <a href="#hero">Intro</a>
         <a href="#method">Methods</a>
         <a href="#findings">Findings</a>
+        <a href="#calc">Calculator</a>
+        <a href="#embed">Reports</a>
         <a href="#downloads">Downloads</a>
       </div>
       <span class="tag">Option 4 · Data Story Website</span>
@@ -52,6 +62,8 @@
       <p><b>Hypothesis (H1).</b> A higher <i>real minimum wage</i> improves the <i>quality of life (QoL)</i> of low-income workers.</p>
       <div class="row">
         <span class="tag">Annual indicators 2008–2023</span>
+        <span class="tag">Plotly interactions</span>
+        <span class="tag">Scrollytelling</span>
       </div>
     </section>
 
@@ -86,20 +98,65 @@
       </div>
     </section>
 
-    <!-- DOWNLOADS (ZIP + Force download + Raw backup) -->
+    <!-- CALCULATOR -->
+    <section id="calc" class="reveal">
+      <h2>Built-in Stats Calculator (Welch t-test &amp; 95% CI)</h2>
+      <p>Enter means, SDs, and sample sizes to compute a 95% CI for the mean difference and the Welch t-test.</p>
+      <div class="calc" style="margin-top:8px">
+        <div><label>Pre: mean</label><input id="pre_m" type="number" step="any" placeholder="e.g., 0.12" /></div>
+        <div><label>Pre: sd</label><input  id="pre_s" type="number" step="any" placeholder="e.g., 0.08" /></div>
+        <div><label>Pre: n</label><input   id="pre_n" type="number" step="1"   placeholder="e.g., 6" /></div>
+        <div><label>Post: mean</label><input id="post_m" type="number" step="any" placeholder="e.g., 0.28" /></div>
+        <div><label>Post: sd</label><input  id="post_s" type="number" step="any" placeholder="e.g., 0.07" /></div>
+        <div><label>Post: n</label><input   id="post_n" type="number" step="1"   placeholder="e.g., 6" /></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <a class="btn" href="#" onclick="calcT();return false;">Compute</a>
+        <span id="t_out" class="note"></span>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="reveal" id="embed">
+      <h2>Embedded Interactive Reports</h2>
+      <p>Switch between your Option 2 and Option 3 Plotly reports.</p>
+      <div class="row" style="gap:8px;margin-bottom:8px">
+        <a class="btn" onclick="setRpt('option2.html')" href="#">View Option 2</a>
+        <a class="btn" onclick="setRpt('option3.html')" href="#">View Option 3</a>
+      </div>
+      <iframe id="rpt" class="iframe-box" src="option2.html" title="Interactive Report"></iframe>
+    </section>
+
+    <!-- DOWNLOADS (ZIP + Force-download page + Colab) -->
     <section id="downloads" class="reveal">
       <h2>Downloads</h2>
       <p>Materials for full reproducibility.</p>
+
+      <!-- ZIP: most reliable -->
+      <div class="row" style="gap:8px;margin-bottom:8px">
+        <a class="btn" href="artifacts.zip" download>🗂️ All files (ZIP)</a>
+      </div>
+      <p class="note">Tip: If your browser warns that some files can't be previewed, use the ZIP button above to download everything at once.</p>
 
       <!-- Force download via same-origin helper page -->
       <div class="row" style="gap:8px;margin-top:8px">
         <a class="btn" href="download.html?f=merged_for_plotly.csv">📊 Data CSV</a>
         <a class="btn" href="download.html?f=option2.ipynb">📖 Option 2 Notebook (.ipynb)</a>
         <a class="btn" href="download.html?f=option3.ipynb">📖 Option 3 Notebook (.ipynb)</a>
+        <!-- (optional PDF when ready) -->
+        <!-- <a class="btn" href="download.html?f=TwoSystemMaps.pdf">🗺️ Two System Maps (PDF)</a> -->
+      </div>
+
+      <!-- Open directly in Colab (nice UX) -->
+      <div class="row" style="gap:8px;margin-top:6px">
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://colab.research.google.com/github/nagima06/qol-minwage-story/blob/main/option2.ipynb">▶️ Open Option 2 in Colab</a>
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://colab.research.google.com/github/nagima06/qol-minwage-story/blob/main/option3.ipynb">▶️ Open Option 3 in Colab</a>
       </div>
 
       <p class="note" style="margin-top:6px">
-        Note: JSON assets (<code>trend.json</code>, <code>scatter.json</code>, <code>ci.json</code>) are internal files for the charts and not intended for direct viewing.
+        Note: Notebooks (.ipynb) cannot be previewed on this site. The buttons above trigger a direct download through a same-origin helper, or open the notebooks in Colab. ZIP is the most reliable option across browsers.
       </p>
     </section>
 
@@ -114,6 +171,32 @@
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
     },{threshold:0.15});
     for(const el of document.querySelectorAll('.reveal')) io.observe(el);
+
+    // Report switcher
+    function setRpt(src){ document.getElementById('rpt').src = src; }
+
+    // Welch t-test calculator
+    function tCritical95(df){
+      const lut = {1:12.706,2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,12:2.179,15:2.131,20:2.086,25:2.060,30:2.042,40:2.021,60:2.000,120:1.980,1e9:1.960};
+      const ks = Object.keys(lut).map(Number).sort((a,b)=>a-b);
+      for (let i=0;i<ks.length;i++){
+        if (df<=ks[i]){ if (i===0) return lut[ks[0]]; const k0=ks[i-1],k1=ks[i];
+          const y0=lut[k0],y1=lut[k1]; return y0+(y1-y0)*((df-k0)/(k1-k0)); }
+      }
+      return 1.96;
+    }
+    function calcT(){
+      const pm=parseFloat(pre_m.value), ps=parseFloat(pre_s.value), pn=parseFloat(pre_n.value);
+      const qm=parseFloat(post_m.value), qs=parseFloat(post_s.value), qn=parseFloat(post_n.value);
+      if([pm,ps,pn,qm,qs,qn].some(v=>!isFinite(v))){ t_out.textContent='Please fill all fields.'; return; }
+      const se=Math.sqrt(ps*ps/pn + qs*qs/qn);
+      const t=(qm-pm)/se;
+      const df=Math.pow(ps*ps/pn + qs*qs/qn,2) / (Math.pow(ps*ps/pn,2)/(pn-1) + Math.pow(qs*qs/qn,2)/(qn-1));
+      const tcrit=tCritical95(df);
+      const decision=Math.abs(t)>tcrit ? 'Reject H0 (significant)' : 'Fail to reject H0';
+      const w=tcrit*se; const lo=(qm-pm)-w, hi=(qm-pm)+w;
+      t_out.innerHTML=`Δ = ${(qm-pm).toFixed(3)}; 95% CI [${lo.toFixed(3)}, ${hi.toFixed(3)}]; t = ${t.toFixed(3)}, df = ${df.toFixed(1)}, tcrit = ${tcrit.toFixed(3)} → <b>${decision}</b>`;
+    }
 
     // Plotly loaders (use JSON if present; else demo)
     async function renderFig(id, file, fallback){
@@ -182,7 +265,7 @@
       const fit=x=>-2+0.28*x; const xs=[...Array(50)].map((_,i)=>6.2+i*(3.3/49)); const ys=xs.map(fit);
       Plotly.newPlot('fig_scatter',
         [{x:w,y:q,mode:'markers',name:'Data'},
-        {x:xs,y:ys,mode:'lines',name:'fit',line:{dash:'dash'}}],
+         {x:xs,y:ys,mode:'lines',name:'fit',line:{dash:'dash'}}],
         {paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
          margin:{l:50,r:20,t:30,b:40},xaxis:{title:'Real Min Wage (index)'},yaxis:{title:'QoL (index)'}},
         {responsive:true});
@@ -202,4 +285,3 @@
   </script>
 </body>
 </html>
-
