@@ -9,7 +9,7 @@
     :root { --bg:#0a0f1f; --ink:#eaf0ff; --muted:#a9b4d6; --card:#131b36; --accent:#6ea8fe; }
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
     .wrap{max-width:1200px;margin:0 auto;padding:20px}
-    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(10,15,31,.95), rgba(10,15,31,.7));backdrop-filter:blur(6px);border-bottom:1px solid #223061; z-index: 10;}
+    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(10,15,31,.95), rgba(10,15,31,.7));backdrop-filter:blur(6px);border-bottom:1px solid #223061}
     header .bar{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:10px 16px}
     header a{color:var(--muted);text-decoration:none;margin-right:14px}
     header a:hover{color:var(--ink)}
@@ -29,16 +29,11 @@
     .btn:hover{border-color:#6ea8fe}
     .row{display:flex;gap:8px;flex-wrap:wrap}
     .calc{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
-    input{background:#0d1530;border:1px solid #2a376b;color:var(--ink);border-radius:10px;padding:8px}
+    input{background:#0d1530;border:1px solid #2a376b;color:#ink;border-radius:10px;padding:8px}
     label{font-size:12px;color:#cbd6ff}
     footer{color:var(--muted);text-align:center;margin:28px 0 40px}
     .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto}
   </style>
-  <!-- (선택) 공유 미리보기 카드 -->
-  <meta property="og:title" content="Minimum Wage × QoL — Korea 2008–2023">
-  <meta property="og:description" content="Pooled OLS, pre–post CI, and embedded interactive reports (Option 2/3).">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
   <header>
@@ -127,41 +122,22 @@
       <iframe id="rpt" class="iframe-box" src="option2.html" title="Interactive Report"></iframe>
     </section>
 
-    <!-- DOWNLOADS (ZIP + Force-download page + Colab) -->
+    <!-- DOWNLOADS -->
     <section id="downloads" class="reveal">
       <h2>Downloads</h2>
       <p>Materials for full reproducibility.</p>
-
-      <!-- ZIP: most reliable -->
       <div class="row" style="gap:8px;margin-bottom:8px">
-        <a class="btn" href="artifacts.zip" download>🗂️ All files (ZIP)</a>
+        <a class="btn" href="merged_for_plotly.csv" download>📊 Data CSV (merged_for_plotly.csv)</a>
+        <a class="btn" href="option2.ipynb" download>📖 Option 2 Notebook (.ipynb)</a>
+        <a class="btn" href="option3.ipynb" download>📖 Option 3 Notebook (.ipynb)</a>
+        <!-- Optional PDF: add when ready -->
+        <!-- <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ Two System Maps (PDF)</a> -->
       </div>
-      <p class="note">Tip: If your browser warns that some files can't be previewed, use the ZIP button above to download everything at once.</p>
-
-      <!-- Force download via same-origin helper page -->
-      <div class="row" style="gap:8px;margin-top:8px">
-        <a class="btn" href="download.html?f=merged_for_plotly.csv">📊 Data CSV</a>
-        <a class="btn" href="download.html?f=option2.ipynb">📖 Option 2 Notebook (.ipynb)</a>
-        <a class="btn" href="download.html?f=option3.ipynb">📖 Option 3 Notebook (.ipynb)</a>
-        <!-- (optional PDF when ready) -->
-        <!-- <a class="btn" href="download.html?f=TwoSystemMaps.pdf">🗺️ Two System Maps (PDF)</a> -->
-      </div>
-
-      <!-- Open directly in Colab (nice UX) -->
-      <div class="row" style="gap:8px;margin-top:6px">
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://colab.research.google.com/github/nagima06/qol-minwage-story/blob/main/option2.ipynb">▶️ Open Option 2 in Colab</a>
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://colab.research.google.com/github/nagima06/qol-minwage-story/blob/main/option3.ipynb">▶️ Open Option 3 in Colab</a>
-      </div>
-
-      <p class="note" style="margin-top:6px">
-        Note: Notebooks (.ipynb) cannot be previewed on this site. The buttons above trigger a direct download through a same-origin helper, or open the notebooks in Colab. ZIP is the most reliable option across browsers.
-      </p>
+      <p class="note">If your notebooks are in subfolders, update the <code>href</code> paths accordingly.</p>
     </section>
 
     <footer class="reveal">
-      <p>©2025 Team QoL × MinWage · GitHub Pages</p>
+      <p>© 2025 Team QoL × MinWage · GitHub Pages</p>
     </footer>
   </div>
 
@@ -285,3 +261,4 @@
   </script>
 </body>
 </html>
+
