@@ -23,15 +23,13 @@
     @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
     .figure{height:420px;border-radius:14px;background:#0b132a}
     .note{font-size:12px;color:var(--muted)}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-    .chip{border:1px solid #2a376b;border-radius:999px;padding:2px 8px;font-size:12px;color:#c7d2ff}
     .reveal{opacity:0;transform:translateY(12px);transition:all .6s ease}
     .reveal.show{opacity:1;transform:none}
     .btn{display:inline-flex;align-items:center;gap:8px;background:#0f1836;border:1px solid #2a376b;color:#dfe8ff;border-radius:10px;padding:10px 14px;text-decoration:none}
     .btn:hover{border-color:#6ea8fe}
     .row{display:flex;gap:8px;flex-wrap:wrap}
     .calc{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
-    input{background:#0d1530;border:1px solid #2a376b;color:var(--ink);border-radius:10px;padding:8px}
+    input{background:#0d1530;border:1px solid #2a376b;color:#ink;border-radius:10px;padding:8px}
     label{font-size:12px;color:#cbd6ff}
     footer{color:var(--muted);text-align:center;margin:28px 0 40px}
     .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto}
@@ -53,37 +51,31 @@
   </header>
 
   <div class="wrap">
-    <!-- ===================== HERO ===================== -->
+    <!-- HERO -->
     <section id="hero" class="hero reveal">
       <h1>Minimum Wage &amp; Quality of Life in Korea (2008–2023)</h1>
       <p><b>Hypothesis (H1).</b> A higher <i>real minimum wage</i> improves the <i>quality of life (QoL)</i> of low-income workers.</p>
-      <div class="chips">
-        <span class="chip">Annual national indicators (2008–2023)</span>
-        <span class="chip">Plotly interactions</span>
-        <span class="chip">Scrollytelling narrative</span>
+      <div class="row">
+        <span class="tag">Annual indicators 2008–2023</span>
+        <span class="tag">Plotly interactions</span>
+        <span class="tag">Scrollytelling</span>
       </div>
     </section>
 
-    <!-- ===================== METHODS ===================== -->
+    <!-- METHODS -->
     <section id="method" class="reveal">
       <h2>Study Design</h2>
       <div class="grid">
         <div>
-          <p>
-            <b>QoL metrics.</b> Engel ratio (↓ better), housing cost share (↓), stress index (↓), disposable income (↑), and leisure/culture spending share (↑).
-            We also construct a <b>composite QoL</b> by z-scoring each metric, aligning directions, and averaging.
-          </p>
-          <p>
-            <b>Analysis.</b> All years are pooled to examine the QoL–wage relationship (scatter + OLS straight-line fit). We also compare
-            <b>pre</b> (2008–2017) vs <b>post</b> (2018–2023) periods and report a 95% confidence interval for the mean difference.
-          </p>
-          <p class="note">Charts below try to load <code>fig/trend.json</code>, <code>fig/scatter.json</code>, <code>fig/ci.json</code>. If missing, demo charts are shown.</p>
+          <p><b>QoL metrics.</b> Engel_Coeff_Pct (↓ better), HousingCost_Income_Ratio_Pct (↓), Stress_Index (↓), Disposable_Income_Real_ThousandKRW (↑), Leisure_Exp_Ratio_Pct (↑). We also construct a <b>composite QoL</b> by z-scoring the direction-aligned metrics (Engel_dir_z, Housing_dir_z, Stress_dir_z, Income_dir_z, Leisure_dir_z) and averaging.</p>
+          <p><b>Analysis.</b> All years (2008–2023) are pooled to examine the QoL–wage relationship (scatter + OLS fit) using a real minimum-wage index derived from <code>MW_Growth_Pct</code>. We also compare <b>pre</b> (2008–2017) vs <b>post</b> (2018–2023) with a 95% CI for the mean difference.</p>
+          <p class="note">Charts below load <code>fig/trend.json</code>, <code>fig/scatter.json</code>, <code>fig/ci.json</code>. If missing, demo charts are shown.</p>
         </div>
         <div class="figure" id="fig_trend"></div>
       </div>
     </section>
 
-    <!-- ===================== FINDINGS ===================== -->
+    <!-- FINDINGS -->
     <section id="findings" class="reveal">
       <h2>Key Findings</h2>
       <div class="grid">
@@ -101,7 +93,7 @@
       </div>
     </section>
 
-    <!-- ===================== CALCULATOR ===================== -->
+    <!-- CALCULATOR -->
     <section id="calc" class="reveal">
       <h2>Built-in Stats Calculator (Welch t-test &amp; 95% CI)</h2>
       <p>Enter means, SDs, and sample sizes to compute a 95% CI for the mean difference and the Welch t-test.</p>
@@ -119,7 +111,7 @@
       </div>
     </section>
 
-    <!-- ===================== EMBEDDED REPORTS ===================== -->
+    <!-- REPORTS -->
     <section class="reveal" id="embed">
       <h2>Embedded Interactive Reports</h2>
       <p>Switch between your Option 2 and Option 3 Plotly reports.</p>
@@ -130,16 +122,18 @@
       <iframe id="rpt" class="iframe-box" src="option2.html" title="Interactive Report"></iframe>
     </section>
 
-    <!-- ===================== DOWNLOADS ===================== -->
+    <!-- DOWNLOADS -->
     <section id="downloads" class="reveal">
       <h2>Downloads</h2>
       <p>Materials for full reproducibility.</p>
       <div class="row" style="gap:8px;margin-bottom:8px">
-        <a class="btn" href="data/dataset.csv" download>📊 Data CSV</a>
-        <a class="btn" href="Option3_Easy_Interactive_Presentation.ipynb" download>📖 Notebook (.ipynb)</a>
-        <a class="btn" href="report.html" download>📋 Plotly HTML</a>
-        <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ Two System Maps (PDF)</a>
+        <a class="btn" href="merged_for_plotly.csv" download>📊 Data CSV (merged_for_plotly.csv)</a>
+        <a class="btn" href="option2.ipynb" download>📖 Option 2 Notebook (.ipynb)</a>
+        <a class="btn" href="option3.ipynb" download>📖 Option 3 Notebook (.ipynb)</a>
+        <!-- Optional PDF: add when ready -->
+        <!-- <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ Two System Maps (PDF)</a> -->
       </div>
+      <p class="note">If your notebooks are in subfolders, update the <code>href</code> paths accordingly.</p>
     </section>
 
     <footer class="reveal">
@@ -148,16 +142,16 @@
   </div>
 
   <script>
-    /* ===== Reveal on scroll ===== */
+    // Reveal on scroll
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
     },{threshold:0.15});
     for(const el of document.querySelectorAll('.reveal')) io.observe(el);
 
-    /* ===== Simple report switcher ===== */
+    // Report switcher
     function setRpt(src){ document.getElementById('rpt').src = src; }
 
-    /* ===== Welch t-test calculator ===== */
+    // Welch t-test calculator
     function tCritical95(df){
       const lut = {1:12.706,2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,12:2.179,15:2.131,20:2.086,25:2.060,30:2.042,40:2.021,60:2.000,120:1.980,1e9:1.960};
       const ks = Object.keys(lut).map(Number).sort((a,b)=>a-b);
@@ -180,7 +174,7 @@
       t_out.innerHTML=`Δ = ${(qm-pm).toFixed(3)}; 95% CI [${lo.toFixed(3)}, ${hi.toFixed(3)}]; t = ${t.toFixed(3)}, df = ${df.toFixed(1)}, tcrit = ${tcrit.toFixed(3)} → <b>${decision}</b>`;
     }
 
-    /* ===== Plotly figure loaders (use JSON if present; else demo) ===== */
+    // Plotly loaders (use JSON if present; else demo)
     async function renderFig(id, file, fallback){
       try{
         const res = await fetch(file); if(!res.ok) throw new Error('no file');
@@ -189,13 +183,13 @@
       }catch(err){ fallback(); }
     }
 
-    /* ===== Auto-summary numbers from JSON ===== */
+    // Auto-summary numbers from JSON (slope r and CI)
     async function updateSummary(){
       const el = document.getElementById('summary-text');
       let text = `<b>Summary.</b> Using all years pooled, the minimum wage–QoL association is positive.`;
 
       try {
-        // 1) slope & r from scatter.json (assumes first trace is the raw points)
+        // slope & r from scatter.json (trace 0 = data points)
         const sc = await fetch('fig/scatter.json');
         if (sc.ok){
           const scj = await sc.json();
@@ -206,12 +200,12 @@
             const mx = x.reduce((a,b)=>a+b,0)/n, my = y.reduce((a,b)=>a+b,0)/n;
             let num=0, dx2=0, dy2=0;
             for(let i=0;i<n;i++){ const dx=x[i]-mx, dy=y[i]-my; num+=dx*dy; dx2+=dx*dx; dy2+=dy*dy; }
-            const b1 = num/dx2;                     // OLS slope
-            const r  = num/Math.sqrt(dx2*dy2);      // Pearson r
+            const b1 = num/dx2;
+            const r  = num/Math.sqrt(dx2*dy2);
             text += ` OLS slope b₁ = <b>${b1.toFixed(3)}</b> (r = <b>${r.toFixed(3)}</b>).`;
           }
         }
-        // 2) diff & CI from ci.json (bar with error_y array = CI half-width)
+        // diff & CI from ci.json
         const ci = await fetch('fig/ci.json');
         if (ci.ok){
           const cij = await ci.json();
@@ -224,10 +218,10 @@
         }
       } catch(e){ /* keep default wording */ }
 
-      el.innerHTML = text;
+      el.innerHTML = text + " The post period (2018–2023) exceeds the pre period (2008–2017).";
     }
 
-    /* ===== Demo figures (fallback) ===== */
+    // Demo figures (fallback)
     function demoTrend(){
       const x=[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023];
       const q=[-0.42,-0.02,0.05,-0.32,-0.36,-0.20,-0.13,-0.28,-0.17,0.34,0.65,0.69];
@@ -249,7 +243,7 @@
         [{x:w,y:q,mode:'markers',name:'Data'},
          {x:xs,y:ys,mode:'lines',name:'fit',line:{dash:'dash'}}],
         {paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-         margin:{l:50,r:20,t:30,b:40},xaxis:{title:'Real Min Wage'},yaxis:{title:'QoL (index)'}},
+         margin:{l:50,r:20,t:30,b:40},xaxis:{title:'Real Min Wage (index)'},yaxis:{title:'QoL (index)'}},
         {responsive:true});
     }
     function demoCI(){
@@ -259,7 +253,7 @@
         {responsive:true});
     }
 
-    /* ===== Kick off ===== */
+    // Kick off
     renderFig('fig_trend','fig/trend.json',demoTrend);
     renderFig('fig_scatter','fig/scatter.json',demoScatter);
     renderFig('fig_ci','fig/ci.json',demoCI);
