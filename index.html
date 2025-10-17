@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>최저임금 × 삶의질 — 데이터 스토리</title>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <style>
+    :root { --bg:#0a0f1f; --ink:#eaf0ff; --muted:#a9b4d6; --card:#131b36; --accent:#6ea8fe; }
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;line-height:1.6}
+    .wrap{max-width:1024px;margin:0 auto;padding:20px}
+    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(10,15,31,.95), rgba(10,15,31,.7));backdrop-filter:blur(6px);border-bottom:1px solid #223061}
+    header .bar{display:flex;align-items:center;justify-content:space-between;max-width:1024px;margin:0 auto;padding:10px 16px}
+    header a{color:var(--muted);text-decoration:none;margin-right:14px}
+    header a:hover{color:var(--ink)}
+    .hero{padding:56px 16px 24px}
+    h1{margin:0 0 6px;font-size:32px}
+    .tag{display:inline-flex;align-items:center;gap:8px;border:1px solid #2a376b;color:#cfe0ff;background:#0e1631;border-radius:999px;padding:2px 10px;font-size:12px}
+    section{margin:28px 0;background:var(--card);border-radius:18px;padding:16px 16px;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+    h2{font-size:20px;margin:0 0 10px}
+    p{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+    .figure{height:420px;border-radius:14px;background:#0b132a}
+    .note{font-size:12px;color:var(--muted)}
+    .reveal{opacity:0;transform:translateY(12px);transition:all .6s ease}
+    .reveal.show{opacity:1;transform:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:#0f1836;border:1px solid #2a376b;color:#dfe8ff;border-radius:10px;padding:8px 12px;text-decoration:none}
+    .btn:hover{border-color:#6ea8fe}
+    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .chip{border:1px solid #2a376b;border-radius:999px;padding:2px 8px;font-size:12px;color:#c7d2ff}
+    .calc{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
+    input{background:#0d1530;border:1px solid #2a376b;color:var(--ink);border-radius:10px;padding:8px}
+    label{font-size:12px;color:#cbd6ff}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    footer{color:var(--muted);text-align:center;margin:28px 0 40px}
+    .iframe-box{height:520px;border:0;border-radius:14px;overflow:hidden}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="row">
+        <a href="#hero">소개</a>
+        <a href="#method">방법</a>
+        <a href="#findings">결과</a>
+        <a href="#calc">통계 계산기</a>
+        <a href="#downloads">다운로드</a>
+      </div>
+      <span class="tag">Option 4 · Data Story Website</span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section id="hero" class="hero reveal">
+      <h1>최저임금 상승은 삶의 질을 개선할까?</h1>
+      <p><b>가설(H1)</b>: <i>실질 최저임금</i>이 높아질수록 저소득층의 <i>삶의 질(QoL)</i>은 개선된다.</p>
+      <div class="chips">
+        <span class="chip">대한민국 패널(연도별)</span>
+        <span class="chip">Plotly 인터랙션</span>
+        <span class="chip">Scrollytelling</span>
+      </div>
+    </section>
+
+    <section id="method" class="reveal">
+      <h2>연구 설계</h2>
+      <div class="grid">
+        <div>
+          <p>지표는 엥겔계수(↓ 좋음), 주거비/소득(↓), 스트레스(↓), 가처분소득(↑), 문화·여가지출비중(↑)을 사용했고, 표준화(z) 후 방향을 맞춰 평균한 <b>합성 QoL</b>도 제시합니다. 모든 연도 자료를 풀링하여 <b>산점도+단순추세</b>로 관계를 보고, 기간 구간별 비교와 신뢰구간을 함께 제공합니다.</p>
+          <p class="note">아래 그래프들은 저장된 JSON을 불러 렌더합니다(오프라인 동작). 교체하려면 repo의 <code>fig/</code> 안 JSON을 새로 내보내세요.</p>
+        </div>
+        <div class="figure" id="fig_trend"></div>
+      </div>
+    </section>
+
+    <section id="findings" class="reveal">
+      <h2>핵심 결과</h2>
+      <div class="grid">
+        <div class="figure" id="fig_scatter"></div>
+        <div>
+          <p><b>요약:</b> 전 연도를 합쳐 보면, 최저임금과 QoL 사이의 기울기 <code>b₁ &gt; 0</code>로 양(+)의 연관성이 관찰됩니다. 또한 2018–2023 기간의 평균 QoL은 이전 대비 상승했으며, 95% 신뢰구간이 0을 넘는 구간에서 차이가 유의합니다.</p>
+          <ul class="note">
+            <li>좌측: QoL vs 실질 최저임금 (OLS 선형선 적합)</li>
+            <li>우측: 전/후 평균차와 95% CI (막대 + 에러바)</li>
+          </ul>
+          <div class="figure" id="fig_ci" style="margin-top:8px;height:240px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calc" class="reveal">
+      <h2>내장 통계 계산기 (Welch t‑test & 95% CI)</h2>
+      <p>평균/표준편차/표본수를 입력하면 전/후 평균차의 95% CI와 Welch t‑검정을 계산합니다. (수업 수준 계산기)</p>
+      <div class="calc" style="margin-top:8px">
+        <div>
+          <label>Pre: mean</label>
+          <input id="pre_m" type="number" step="any" placeholder="예: 0.12" />
+        </div>
+        <div>
+          <label>Pre: sd</label>
+          <input id="pre_s" type="number" step="any" placeholder="예: 0.08" />
+        </div>
+        <div>
+          <label>Pre: n</label>
+          <input id="pre_n" type="number" step="1" placeholder="예: 6" />
+        </div>
+        <div>
+          <label>Post: mean</label>
+          <input id="post_m" type="number" step="any" placeholder="예: 0.28" />
+        </div>
+        <div>
+          <label>Post: sd</label>
+          <input id="post_s" type="number" step="any" placeholder="예: 0.07" />
+        </div>
+        <div>
+          <label>Post: n</label>
+          <input id="post_n" type="number" step="1" placeholder="예: 6" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <a class="btn" href="#" onclick="calcT();return false;">계산하기</a>
+        <span id="t_out" class="note"></span>
+      </div>
+    </section>
+
+    <section class="reveal" id="embed">
+      <h2>인터랙티브 보고서 임베드</h2>
+      <p>옵션 2/3에서 만든 Plotly 보고서를 같은 저장소에 넣고 아래에 <code>report.html</code>로 임베드하세요.</p>
+      <iframe class="iframe-box" src="report.html" title="Interactive Report"></iframe>
+    </section>
+
+    <section id="downloads" class="reveal">
+      <h2>자료 다운로드</h2>
+      <p>재현 가능성을 위해 원본과 산출물을 제공합니다.</p>
+      <div class="row">
+        <a class="btn" href="data/dataset.csv" download>📄 데이터 CSV</a>
+        <a class="btn" href="Option3_Easy_Interactive_Presentation.ipynb" download>📓 노트북(.ipynb)</a>
+        <a class="btn" href="report.html" download>📊 Plotly HTML</a>
+        <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ System Maps PDF</a>
+      </div>
+      <p class="note" style="margin-top:8px">위 파일명은 예시입니다. 리포지토리에 같은 이름으로 넣어두면 자동으로 동작합니다.</p>
+    </section>
+
+    <footer class="reveal">
+      <p>© 2025 Team QoL × MinWage · GitHub Pages</p>
+    </footer>
+  </div>
+
+<script>
+// ── Scrollytelling reveal ──
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+},{threshold:0.15});
+for(const el of document.querySelectorAll('.reveal')) io.observe(el);
+
+// ── Tiny t‑test calculator (Welch) ──
+function tCritical95(df){
+  const lut = {1:12.706,2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,12:2.179,15:2.131,20:2.086,25:2.060,30:2.042,40:2.021,60:2.000,120:1.980,1e9:1.960};
+  const ks = Object.keys(lut).map(Number).sort((a,b)=>a-b);
+  for(let i=0;i<ks.length;i++){
+    if(df<=ks[i]){ if(i===0) return lut[ks[0]]; const k0=ks[i-1],k1=ks[i];
+      const y0=lut[k0],y1=lut[k1]; const t=y0+(y1-y0)*( (df-k0)/(k1-k0) ); return t; }
+  }
+  return 1.96;
+}
+function calcT(){
+  const pm=parseFloat(pre_m.value), ps=parseFloat(pre_s.value), pn=parseFloat(pre_n.value);
+  const qm=parseFloat(post_m.value), qs=parseFloat(post_s.value), qn=parseFloat(post_n.value);
+  if([pm,ps,pn,qm,qs,qn].some(v=>!isFinite(v))){t_out.textContent='모든 칸을 채워주세요.';return;}
+  const se=Math.sqrt(ps*ps/pn + qs*qs/qn);
+  const t=(qm-pm)/se;
+  const df=Math.pow(ps*ps/pn + qs*qs/qn,2) / (Math.pow(ps*ps/pn,2)/(pn-1) + Math.pow(qs*qs/qn,2)/(qn-1));
+  const tcrit=tCritical95(df);
+  const dec=Math.abs(t)>tcrit ? 'H0 기각(유의)' : 'H0 기각 실패';
+  const w=tcrit*se; const lo=(qm-pm)-w, hi=(qm-pm)+w;
+  t_out.innerHTML=`Δ= ${(qm-pm).toFixed(3)}; 95% CI [${lo.toFixed(3)}, ${hi.toFixed(3)}]; t=${t.toFixed(3)}, df=${df.toFixed(1)}, tcrit=${tcrit.toFixed(3)} → <b>${dec}</b>`;
+}
+
+// ── Plotly figure loaders ──
+// 이 템플릿은 fig/*.json을 불러 렌더합니다(Plotly.toImage로 저장했던 JSON). 없으면 예시 데이터로 그림 생성.
+async function renderFig(id, file, fallback){
+  try{
+    const res = await fetch(file); if(!res.ok) throw new Error('no file');
+    const {data, layout, config} = await res.json();
+    Plotly.newPlot(id, data, layout, config || {responsive:true});
+  }catch(err){ fallback(); }
+}
+
+// 예시 그림 (데모용) — 실제로는 fig/*.json 파일로 교체
+function demoTrend(){
+  const x=[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023];
+  const q=[-0.42,-0.02,0.05,-0.32,-0.36,-0.20,-0.13,-0.28,-0.17,0.34,0.65,0.69];
+  const w=[6.3,6.4,6.6,6.8,7.0,7.5,8.3,8.7,8.6,8.9,9.1,9.3];
+  const qn=q.map((v,i)=> (v-Math.min(...q))/(Math.max(...q)-Math.min(...q)) );
+  const wn=w.map((v,i)=> (v-Math.min(...w))/(Math.max(...w)-Math.min(...w)) );
+  Plotly.newPlot('fig_trend',[{x, y:qn, mode:'lines+markers', name:'QoL (norm)'},{x, y:wn, mode:'lines+markers', name:'Wage (norm)'}],{paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',margin:{l:50,r:20,t:30,b:40},xaxis:{title:'Year'},yaxis:{title:'Normalized (0–1)'}},{responsive:true});
+}
+function demoScatter(){
+  const w=[6.3,6.4,6.6,6.8,7.0,7.5,8.3,8.7,8.6,8.9,9.1,9.3];
+  const q=[-0.42,-0.02,0.05,-0.32,-0.36,-0.20,-0.13,-0.28,-0.17,0.34,0.65,0.69];
+  const fit=(x)=>-2+0.28*x; const xs=[...Array(50)].map((_,i)=>6.2+i*(3.3/49)); const ys=xs.map(fit);
+  Plotly.newPlot('fig_scatter',[{x:w,y:q,mode:'markers',name:'Data'},{x:xs,y:ys,mode:'lines',name:'fit',line:{dash:'dash'}}],{paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',margin:{l:50,r:20,t:30,b:40},xaxis:{title:'Real Min Wage'},yaxis:{title:'QoL (index)'}},{responsive:true});
+}
+function demoCI(){
+  Plotly.newPlot('fig_ci',[{x:['Post-Pre'],y:[0.18],type:'bar',error_y:{type:'data',array:[0.07],visible:true}}],{paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',margin:{l:50,r:20,t:10,b:30},yaxis:{title:'Mean diff (QoL)'}},{responsive:true});
+}
+
+renderFig('fig_trend','fig/trend.json',demoTrend);
+renderFig('fig_scatter','fig/scatter.json',demoScatter);
+renderFig('fig_ci','fig/ci.json',demoCI);
+</script>
+</body>
+</html>
