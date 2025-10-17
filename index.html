@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Minimum Wage × Quality of Life — Data Story</title>
+  <title>Minimum Wage × Quality of Life — Korea 2008–2023</title>
   <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
   <style>
     :root { --bg:#0a0f1f; --ink:#eaf0ff; --muted:#a9b4d6; --card:#131b36; --accent:#6ea8fe; }
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
-    .wrap{max-width:1200px;margin:0 auto;padding:20px} /* wider container */
+    .wrap{max-width:1200px;margin:0 auto;padding:20px}
     header{position:sticky;top:0;background:linear-gradient(180deg, rgba(10,15,31,.95), rgba(10,15,31,.7));backdrop-filter:blur(6px);border-bottom:1px solid #223061}
     header .bar{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:10px 16px}
     header a{color:var(--muted);text-decoration:none;margin-right:14px}
@@ -23,18 +23,18 @@
     @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
     .figure{height:420px;border-radius:14px;background:#0b132a}
     .note{font-size:12px;color:var(--muted)}
+    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .chip{border:1px solid #2a376b;border-radius:999px;padding:2px 8px;font-size:12px;color:#c7d2ff}
     .reveal{opacity:0;transform:translateY(12px);transition:all .6s ease}
     .reveal.show{opacity:1;transform:none}
     .btn{display:inline-flex;align-items:center;gap:8px;background:#0f1836;border:1px solid #2a376b;color:#dfe8ff;border-radius:10px;padding:10px 14px;text-decoration:none}
     .btn:hover{border-color:#6ea8fe}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-    .chip{border:1px solid #2a376b;border-radius:999px;padding:2px 8px;font-size:12px;color:#c7d2ff}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
     .calc{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
     input{background:#0d1530;border:1px solid #2a376b;color:var(--ink);border-radius:10px;padding:8px}
     label{font-size:12px;color:#cbd6ff}
-    .row{display:flex;gap:8px;flex-wrap:wrap}
     footer{color:var(--muted);text-align:center;margin:28px 0 40px}
-    .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto} /* wider & taller */
+    .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto}
   </style>
 </head>
 <body>
@@ -53,33 +53,45 @@
   </header>
 
   <div class="wrap">
+    <!-- ===================== HERO ===================== -->
     <section id="hero" class="hero reveal">
-      <h1>Does Raising Minimum Wage Improve Quality of Life?</h1>
-      <p><b>Hypothesis (H1).</b> Higher <i>real minimum wage</i> is associated with better <i>quality of life (QoL)</i> for low-income workers.</p>
+      <h1>Minimum Wage &amp; Quality of Life in Korea (2008–2023)</h1>
+      <p><b>Hypothesis (H1).</b> A higher <i>real minimum wage</i> improves the <i>quality of life (QoL)</i> of low-income workers.</p>
       <div class="chips">
-        <span class="chip">KR panel (by year)</span>
+        <span class="chip">Annual national indicators (2008–2023)</span>
         <span class="chip">Plotly interactions</span>
-        <span class="chip">Scrollytelling</span>
+        <span class="chip">Scrollytelling narrative</span>
       </div>
     </section>
 
+    <!-- ===================== METHODS ===================== -->
     <section id="method" class="reveal">
       <h2>Study Design</h2>
       <div class="grid">
         <div>
-          <p>We use Engel ratio (↓ better), housing cost/income (↓), stress (↓), disposable income (↑), and leisure/culture spending share (↑). We also show a <b>composite QoL</b> by z-scoring and aligning directions and then averaging. Using all years pooled, we examine QoL–wage relationships (scatter + simple fit) and compare periods with confidence intervals.</p>
-          <p class="note">Charts below load saved JSON from <code>fig/</code>. Replace those JSONs with your own exports to update the visuals.</p>
+          <p>
+            <b>QoL metrics.</b> Engel ratio (↓ better), housing cost share (↓), stress index (↓), disposable income (↑), and leisure/culture spending share (↑).
+            We also construct a <b>composite QoL</b> by z-scoring each metric, aligning directions, and averaging.
+          </p>
+          <p>
+            <b>Analysis.</b> All years are pooled to examine the QoL–wage relationship (scatter + OLS straight-line fit). We also compare
+            <b>pre</b> (2008–2017) vs <b>post</b> (2018–2023) periods and report a 95% confidence interval for the mean difference.
+          </p>
+          <p class="note">Charts below try to load <code>fig/trend.json</code>, <code>fig/scatter.json</code>, <code>fig/ci.json</code>. If missing, demo charts are shown.</p>
         </div>
         <div class="figure" id="fig_trend"></div>
       </div>
     </section>
 
+    <!-- ===================== FINDINGS ===================== -->
     <section id="findings" class="reveal">
       <h2>Key Findings</h2>
       <div class="grid">
         <div class="figure" id="fig_scatter"></div>
         <div>
-          <p><b>Summary.</b> Pooled across years, minimum wage and QoL show a positive slope (<code>b₁ &gt; 0</code>). The 2018–2023 average QoL is higher than the earlier period, and the 95% CI excludes 0 in the significant cases.</p>
+          <p id="summary-text">
+            <b>Summary.</b> Using all years pooled, the minimum wage–QoL association is positive. The post period (2018–2023) exceeds the pre period (2008–2017).
+          </p>
           <ul class="note">
             <li>Left: QoL vs real minimum wage (OLS straight-line fit).</li>
             <li>Right: Pre–Post mean difference with 95% CI (bar + error bar).</li>
@@ -89,8 +101,9 @@
       </div>
     </section>
 
+    <!-- ===================== CALCULATOR ===================== -->
     <section id="calc" class="reveal">
-      <h2>Built-in Stats Calculator (Welch t-test & 95% CI)</h2>
+      <h2>Built-in Stats Calculator (Welch t-test &amp; 95% CI)</h2>
       <p>Enter means, SDs, and sample sizes to compute a 95% CI for the mean difference and the Welch t-test.</p>
       <div class="calc" style="margin-top:8px">
         <div><label>Pre: mean</label><input id="pre_m" type="number" step="any" placeholder="e.g., 0.12" /></div>
@@ -106,6 +119,7 @@
       </div>
     </section>
 
+    <!-- ===================== EMBEDDED REPORTS ===================== -->
     <section class="reveal" id="embed">
       <h2>Embedded Interactive Reports</h2>
       <p>Switch between your Option 2 and Option 3 Plotly reports.</p>
@@ -113,10 +127,10 @@
         <a class="btn" onclick="setRpt('option2.html')" href="#">View Option 2</a>
         <a class="btn" onclick="setRpt('option3.html')" href="#">View Option 3</a>
       </div>
-      <!-- Default to Option 2 -->
       <iframe id="rpt" class="iframe-box" src="option2.html" title="Interactive Report"></iframe>
     </section>
 
+    <!-- ===================== DOWNLOADS ===================== -->
     <section id="downloads" class="reveal">
       <h2>Downloads</h2>
       <p>Materials for full reproducibility.</p>
@@ -124,7 +138,7 @@
         <a class="btn" href="data/dataset.csv" download>📊 Data CSV</a>
         <a class="btn" href="Option3_Easy_Interactive_Presentation.ipynb" download>📖 Notebook (.ipynb)</a>
         <a class="btn" href="report.html" download>📋 Plotly HTML</a>
-        <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ System Maps PDF</a>
+        <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ Two System Maps (PDF)</a>
       </div>
     </section>
 
@@ -134,16 +148,16 @@
   </div>
 
   <script>
-    // Reveal on scroll
+    /* ===== Reveal on scroll ===== */
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
     },{threshold:0.15});
     for(const el of document.querySelectorAll('.reveal')) io.observe(el);
 
-    // Simple report switcher
+    /* ===== Simple report switcher ===== */
     function setRpt(src){ document.getElementById('rpt').src = src; }
 
-    // Welch t calc
+    /* ===== Welch t-test calculator ===== */
     function tCritical95(df){
       const lut = {1:12.706,2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,12:2.179,15:2.131,20:2.086,25:2.060,30:2.042,40:2.021,60:2.000,120:1.980,1e9:1.960};
       const ks = Object.keys(lut).map(Number).sort((a,b)=>a-b);
@@ -166,7 +180,7 @@
       t_out.innerHTML=`Δ = ${(qm-pm).toFixed(3)}; 95% CI [${lo.toFixed(3)}, ${hi.toFixed(3)}]; t = ${t.toFixed(3)}, df = ${df.toFixed(1)}, tcrit = ${tcrit.toFixed(3)} → <b>${decision}</b>`;
     }
 
-    // Plotly figure loaders (uses fig/*.json if present; else demo)
+    /* ===== Plotly figure loaders (use JSON if present; else demo) ===== */
     async function renderFig(id, file, fallback){
       try{
         const res = await fetch(file); if(!res.ok) throw new Error('no file');
@@ -175,7 +189,45 @@
       }catch(err){ fallback(); }
     }
 
-    // Demo figures
+    /* ===== Auto-summary numbers from JSON ===== */
+    async function updateSummary(){
+      const el = document.getElementById('summary-text');
+      let text = `<b>Summary.</b> Using all years pooled, the minimum wage–QoL association is positive.`;
+
+      try {
+        // 1) slope & r from scatter.json (assumes first trace is the raw points)
+        const sc = await fetch('fig/scatter.json');
+        if (sc.ok){
+          const scj = await sc.json();
+          const x = (scj.data?.[0]?.x || []).map(Number);
+          const y = (scj.data?.[0]?.y || []).map(Number);
+          if (x.length === y.length && x.length >= 2){
+            const n = x.length;
+            const mx = x.reduce((a,b)=>a+b,0)/n, my = y.reduce((a,b)=>a+b,0)/n;
+            let num=0, dx2=0, dy2=0;
+            for(let i=0;i<n;i++){ const dx=x[i]-mx, dy=y[i]-my; num+=dx*dy; dx2+=dx*dx; dy2+=dy*dy; }
+            const b1 = num/dx2;                     // OLS slope
+            const r  = num/Math.sqrt(dx2*dy2);      // Pearson r
+            text += ` OLS slope b₁ = <b>${b1.toFixed(3)}</b> (r = <b>${r.toFixed(3)}</b>).`;
+          }
+        }
+        // 2) diff & CI from ci.json (bar with error_y array = CI half-width)
+        const ci = await fetch('fig/ci.json');
+        if (ci.ok){
+          const cij = await ci.json();
+          const y  = cij.data?.[0]?.y?.[0];
+          const ey = (cij.data?.[0]?.error_y?.array||[null])[0];
+          if (isFinite(y) && isFinite(ey)){
+            const lo = y - ey, hi = y + ey;
+            text += ` Post–Pre ΔQoL = <b>${y.toFixed(3)}</b> with 95% CI <b>[${lo.toFixed(3)}, ${hi.toFixed(3)}]</b>.`;
+          }
+        }
+      } catch(e){ /* keep default wording */ }
+
+      el.innerHTML = text;
+    }
+
+    /* ===== Demo figures (fallback) ===== */
     function demoTrend(){
       const x=[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023];
       const q=[-0.42,-0.02,0.05,-0.32,-0.36,-0.20,-0.13,-0.28,-0.17,0.34,0.65,0.69];
@@ -207,9 +259,11 @@
         {responsive:true});
     }
 
+    /* ===== Kick off ===== */
     renderFig('fig_trend','fig/trend.json',demoTrend);
     renderFig('fig_scatter','fig/scatter.json',demoScatter);
     renderFig('fig_ci','fig/ci.json',demoCI);
+    updateSummary();
   </script>
 </body>
 </html>
