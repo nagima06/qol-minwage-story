@@ -29,6 +29,7 @@
     .btn:hover{border-color:#6ea8fe}
     .row{display:flex;gap:8px;flex-wrap:wrap}
     footer{color:var(--muted);text-align:center;margin:28px 0 40px}
+    .iframe-box{width:100%;height:900px;border:0;border-radius:14px;overflow:auto}
   </style>
 </head>
 <body>
@@ -113,12 +114,6 @@
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
     },{threshold:0.15});
     for(const el of document.querySelectorAll('.reveal')) io.observe(el);
-
-    // Report switcher (not used anymore, removed)
-    // function setRpt(src){ document.getElementById('rpt').src = src; }
-
-    // Welch t-test calculator (not used anymore, removed)
-    // function calcT(){}
 
     // Plotly loaders (use JSON if present; else demo)
     async function renderFig(id, file, fallback){
@@ -207,3 +202,4 @@
   </script>
 </body>
 </html>
+
