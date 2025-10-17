@@ -122,27 +122,37 @@
       </div>
     </section>
 
-    <section class="reveal" id="embed">
-      <h2>인터랙티브 보고서 임베드</h2>
-      <p>옵션 2/3에서 만든 Plotly 보고서를 같은 저장소에 넣고 아래에 <code>report.html</code>로 임베드하세요.</p>
-      <iframe class="iframe-box" src="report.html" title="Interactive Report"></iframe>
-    </section>
+   <section class="reveal" id="embed">
+  <h2>인터랙티브 보고서 임베드</h2>
+  <p>옵션 2와 옵션 3 보고서를 버튼으로 전환해 볼 수 있습니다.</p>
 
-    <section id="downloads" class="reveal">
-      <h2>자료 다운로드</h2>
-      <p>재현 가능성을 위해 원본과 산출물을 제공합니다.</p>
-      <div class="row">
-        <a class="btn" href="data/dataset.csv" download>📄 데이터 CSV</a>
-        <a class="btn" href="Option3_Easy_Interactive_Presentation.ipynb" download>📓 노트북(.ipynb)</a>
-        <a class="btn" href="report.html" download>📊 Plotly HTML</a>
-        <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ System Maps PDF</a>
-      </div>
-      <p class="note" style="margin-top:8px">위 파일명은 예시입니다. 리포지토리에 같은 이름으로 넣어두면 자동으로 동작합니다.</p>
-    </section>
+  <div class="row" style="gap:8px;margin-bottom:8px">
+    <a class="btn" onclick="setRpt('option2.html')" href="#">옵션 2 보기</a>
+    <a class="btn" onclick="setRpt('option3.html')" href="#">옵션 3 보기</a>
+  </div>
 
-    <footer class="reveal">
-      <p>© 2025 Team QoL × MinWage · GitHub Pages</p>
-    </footer>
+  <!-- 처음엔 옵션2를 띄워둠 -->
+  <iframe id="rpt" class="iframe-box" src="option2.html" title="Interactive Report"></iframe>
+</section>
+
+<script>
+  function setRpt(src){ document.getElementById('rpt').src = src; }
+</script>
+
+<section id="downloads" class="reveal">
+  <h2>자료 다운로드</h2>
+  <p>재현 가능성을 위해 원본과 산출물을 제공합니다.</p>
+  <div class="row" style="gap:8px;margin-bottom:8px">
+    <a class="btn" href="data/dataset.csv" download>📊 데이터 CSV</a>
+    <a class="btn" href="Option3_Easy_Interactive_Presentation.ipynb" download>📖 노트북(.ipynb)</a>
+    <a class="btn" href="report.html" download>📋 Plotly HTML</a>
+    <a class="btn" href="TwoSystemMaps.pdf" download>🗺️ System Maps PDF</a>
+  </div>
+</section>
+
+<footer class="reveal">
+  <p>©2025 Team Qol × MinWage · GitHub Pages</p>
+</footer>
   </div>
 
 <script>
